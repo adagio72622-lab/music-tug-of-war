@@ -1,0 +1,481 @@
+:root {
+  --blue: #2563eb;
+  --blue-dark: #1d4ed8;
+  --red: #ef4444;
+  --red-dark: #dc2626;
+  --ink: #172033;
+  --muted: #687386;
+  --paper: #fffaf0;
+  --panel: rgba(255, 255, 255, 0.88);
+  --shadow: 0 18px 45px rgba(30, 41, 59, 0.14);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: var(--ink);
+  font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(96, 165, 250, 0.25), transparent 32rem),
+    radial-gradient(circle at bottom right, rgba(248, 113, 113, 0.22), transparent 34rem),
+    #f7f1df;
+}
+
+button,
+a {
+  font: inherit;
+}
+
+.eyebrow {
+  margin: 0 0 0.35rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.landing-page {
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+}
+
+.landing-card {
+  width: min(920px, 100%);
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border: 4px solid #2f2a1f;
+  border-radius: 32px;
+  background: var(--panel);
+  box-shadow: var(--shadow);
+}
+
+.landing-card h1,
+.top-bar h1,
+.team-header h1 {
+  margin: 0;
+  font-size: clamp(2.2rem, 5vw, 4rem);
+}
+
+.landing-card p {
+  font-size: 1.2rem;
+  line-height: 1.8;
+}
+
+.landing-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.landing-actions a,
+.primary-button,
+.secondary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 58px;
+  padding: 0.85rem 1.2rem;
+  border: 0;
+  border-radius: 18px;
+  color: white;
+  font-weight: 900;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 8px 0 rgba(0, 0, 0, 0.16);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.landing-actions a:active,
+.primary-button:active,
+.secondary-button:active {
+  transform: translateY(5px);
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.16);
+}
+
+.primary-link,
+.primary-button {
+  background: #111827;
+}
+
+.team-link.blue,
+.blue-panel,
+.blue-team {
+  background: linear-gradient(135deg, #60a5fa, var(--blue));
+}
+
+.team-link.red,
+.red-panel,
+.red-team {
+  background: linear-gradient(135deg, #fb7185, var(--red));
+}
+
+.secondary-button {
+  background: #64748b;
+}
+
+.primary-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.how-to {
+  padding: 1.25rem;
+  border-radius: 20px;
+  background: rgba(250, 204, 21, 0.15);
+}
+
+.teacher-layout {
+  width: min(1320px, 100%);
+  margin: 0 auto;
+  padding: clamp(1rem, 2vw, 2rem);
+}
+
+.top-bar,
+.scoreboard,
+.link-card,
+.question-card {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.link-card {
+  grid-template-columns: auto 1fr 1fr;
+  align-items: center;
+  padding: 0.8rem 1rem;
+  border: 3px solid rgba(23, 32, 51, 0.55);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.72);
+  font-weight: 800;
+}
+
+.link-card code {
+  padding: 0.2rem 0.45rem;
+  border-radius: 8px;
+  background: rgba(15, 23, 42, 0.08);
+  font-size: 0.95rem;
+}
+
+.top-bar {
+  grid-template-columns: 1fr auto;
+  align-items: center;
+}
+
+.teacher-controls {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.scoreboard {
+  grid-template-columns: 1fr 1.35fr 1fr;
+}
+
+.team-panel,
+.status-panel,
+.question-card,
+.game-stage,
+.team-status-card,
+.team-header {
+  border: 4px solid rgba(23, 32, 51, 0.88);
+  border-radius: 26px;
+  box-shadow: var(--shadow);
+}
+
+.team-panel,
+.status-panel {
+  display: grid;
+  place-items: center;
+  min-height: 120px;
+  padding: 1rem;
+  color: white;
+  text-align: center;
+}
+
+.team-panel strong {
+  font-size: 3rem;
+}
+
+.team-panel small,
+.status-panel small {
+  font-weight: 800;
+}
+
+.status-panel {
+  color: var(--ink);
+  background: var(--panel);
+}
+
+.status-panel strong {
+  font-size: 2rem;
+}
+
+.game-stage {
+  position: relative;
+  min-height: 260px;
+  padding: 2rem;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(254, 243, 199, 0.7));
+}
+
+.tug-area {
+  display: grid;
+  grid-template-columns: 120px 1fr 120px;
+  align-items: center;
+  gap: 1rem;
+  height: 125px;
+}
+
+.side-label {
+  font-size: 2rem;
+  font-weight: 950;
+  text-align: center;
+}
+
+.blue-text {
+  color: var(--blue-dark);
+}
+
+.red-text {
+  color: var(--red-dark);
+}
+
+.rope-track {
+  position: relative;
+  height: 90px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.08);
+}
+
+.center-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 6px;
+  border-radius: 999px;
+  background: #111827;
+  transform: translateX(-50%);
+}
+
+.rope {
+  position: absolute;
+  top: 42px;
+  left: 12%;
+  right: 12%;
+  height: 12px;
+  border-radius: 999px;
+  background: repeating-linear-gradient(90deg, #a16207 0 18px, #facc15 18px 36px);
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.flag {
+  position: absolute;
+  top: -32px;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 4px solid #111827;
+  border-radius: 50%;
+  background: white;
+  font-size: 1.8rem;
+  transform: translateX(-50%);
+}
+
+.characters {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 8%;
+}
+
+.character {
+  font-size: 4.5rem;
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.red-character {
+  transform: scaleX(-1);
+}
+
+.question-card {
+  grid-template-columns: minmax(260px, 0.65fr) 1.3fr minmax(220px, 0.5fr);
+  align-items: center;
+  padding: 1.25rem;
+  background: var(--panel);
+}
+
+.question-card h2 {
+  margin: 0;
+  font-size: clamp(1.8rem, 4vw, 3.2rem);
+}
+
+.answer-reveal {
+  color: var(--muted);
+  font-size: 1.1rem;
+  font-weight: 800;
+  line-height: 1.7;
+}
+
+.staff {
+  min-height: 230px;
+}
+
+.staff svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.staff-line,
+.ledger {
+  stroke: #111827;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.clef {
+  fill: #111827;
+  font-family: Georgia, serif;
+  font-size: 112px;
+}
+
+.note-head {
+  fill: #111827;
+}
+
+.stem {
+  stroke: #111827;
+  stroke-width: 5;
+  stroke-linecap: round;
+}
+
+.empty-staff {
+  display: grid;
+  place-items: center;
+  min-height: 220px;
+  border: 3px dashed rgba(15, 23, 42, 0.22);
+  border-radius: 24px;
+  color: var(--muted);
+  font-weight: 900;
+}
+
+.team-page {
+  padding: 1rem;
+}
+
+.team-layout {
+  width: min(900px, 100%);
+  margin: 0 auto;
+}
+
+.team-header {
+  padding: 1.2rem;
+  color: white;
+  text-align: center;
+}
+
+.team-header .eyebrow {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.team-header p:last-child {
+  margin-bottom: 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.team-status-card {
+  display: grid;
+  gap: 0.35rem;
+  margin: 1rem 0;
+  padding: 1rem;
+  background: var(--panel);
+  text-align: center;
+}
+
+.team-status-card span {
+  color: var(--muted);
+  font-weight: 900;
+}
+
+.team-status-card strong {
+  font-size: 1.55rem;
+}
+
+.answer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.answer-button {
+  min-height: 112px;
+  border: 4px solid #111827;
+  border-radius: 24px;
+  background: white;
+  color: var(--ink);
+  font-weight: 950;
+  cursor: pointer;
+  box-shadow: 0 8px 0 rgba(17, 24, 39, 0.2);
+}
+
+.answer-button span {
+  display: block;
+  font-size: clamp(1.8rem, 7vw, 3rem);
+}
+
+.answer-button small {
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.answer-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+  box-shadow: none;
+}
+
+.answer-button:not(:disabled):active {
+  transform: translateY(6px);
+  box-shadow: 0 2px 0 rgba(17, 24, 39, 0.2);
+}
+
+@media (max-width: 820px) {
+  .landing-actions,
+  .scoreboard,
+  .question-card,
+  .link-card,
+  .top-bar {
+    grid-template-columns: 1fr;
+  }
+
+  .teacher-controls {
+    flex-direction: column;
+  }
+
+  .tug-area {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .side-label {
+    font-size: 1.3rem;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 650px) {
+  .answer-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .answer-button {
+    min-height: 92px;
+  }
+}

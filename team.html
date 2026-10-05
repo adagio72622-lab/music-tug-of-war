@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>隊伍答題｜五線譜拔河大戰</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="team-page">
+    <main class="team-layout">
+      <header id="teamHeader" class="team-header">
+        <p class="eyebrow">iPad 答題畫面</p>
+        <h1 id="teamName">隊伍</h1>
+        <p id="teamHint">看老師畫面上的五線譜，選出正確音名。</p>
+      </header>
+
+      <section class="team-status-card">
+        <span id="teamQuestion">等待老師出題</span>
+        <strong id="teamEvent">準備中</strong>
+      </section>
+
+      <section id="answerGrid" class="answer-grid"></section>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/shared.js"></script>
+    <script src="/team.js"></script>
+  </body>
+</html>
