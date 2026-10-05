@@ -21,8 +21,33 @@ const NOTES = [
   { id: "C5", solfege: "高音 Do", label: "高音 Do", letter: "C", staffStep: 7 }
 ];
 
+const INTERVALS = [
+  { id: "C4-D4", start: NOTES[0], end: NOTES[1], answer: "whole", label: "Do → Re" },
+  { id: "D4-E4", start: NOTES[1], end: NOTES[2], answer: "whole", label: "Re → Mi" },
+  { id: "E4-F4", start: NOTES[2], end: NOTES[3], answer: "half", label: "Mi → Fa" },
+  { id: "F4-G4", start: NOTES[3], end: NOTES[4], answer: "whole", label: "Fa → Sol" },
+  { id: "G4-A4", start: NOTES[4], end: NOTES[5], answer: "whole", label: "Sol → La" },
+  { id: "A4-B4", start: NOTES[5], end: NOTES[6], answer: "whole", label: "La → Si" },
+  { id: "B4-C5", start: NOTES[6], end: NOTES[7], answer: "half", label: "Si → 高音 Do" }
+];
+
+const MODES = {
+  note: {
+    id: "note",
+    name: "認譜模式",
+    prompt: "這個音是什麼？"
+  },
+  interval: {
+    id: "interval",
+    name: "全音半音模式",
+    prompt: "這兩個音之間是全音還是半音？"
+  }
+};
+
 const state = {
   notes: NOTES,
+  modes: MODES,
+  mode: "note",
   question: null,
   questionNumber: 0,
   tugPosition: 0,
@@ -43,9 +68,25 @@ function publicState() {
   };
 }
 
-function randomQuestion() {
+function randomNoteQuestion() {
   const note = NOTES[Math.floor(Math.random() * NOTES.length)];
-  return { ...note };
+  return { type: "note", ...note };
+}
+
+function randomIntervalQuestion() {
+  const interval = INTERVALS[Math.floor(Math.random() * INTERVALS.length)];
+  return {
+    type: "interval",
+    id: interval.id,
+    label: interval.label,
+    start: interval.start,
+    end: interval.end,
+    answer: interval.answer
+  };
+}
+
+function randomQuestion() {
+  return state.mode === "interval" ? randomIntervalQuestion() : randomNoteQuestion();
 }
 
 function nextQuestion() {
@@ -71,6 +112,22 @@ function resetGame() {
 
 function teamName(team) {
   return team === "A" ? "藍隊" : "紅隊";
+}
+
+function answerIsCorrect(noteId) {
+  if (!state.question) return false;
+  if (state.question.type === "interval") {
+    return noteId === state.question.answer;
+  }
+  return noteId === state.question.id;
+}
+
+function correctAnswerLabel() {
+  if (!state.question) return "";
+  if (state.question.type === "interval") {
+    return state.question.answer === "whole" ? "全音" : "半音";
+  }
+  return `${state.question.label} / ${state.question.letter}`;
 }
 
 function emitState() {
@@ -125,13 +182,21 @@ io.on("connection", (socket) => {
     emitState();
   });
 
+  socket.on("teacher:mode", (mode) => {
+    if (!MODES[mode]) return;
+    resetGame();
+    state.mode = mode;
+    state.lastEvent = `已切換到${MODES[mode].name}，請按「下一題」開始。`;
+    emitState();
+  });
+
   socket.on("answer", ({ team, noteId }) => {
     if (!["A", "B"].includes(team)) return;
     if (!state.question || state.status !== "playing" || state.winner) return;
     if (state.lockedTeams[team]) return;
 
     state.lockedTeams[team] = true;
-    const isCorrect = noteId === state.question.id;
+    const isCorrect = answerIsCorrect(noteId);
 
     if (isCorrect) {
       state.scores[team] += 1;
@@ -142,7 +207,7 @@ io.on("connection", (socket) => {
       state.lastEvent = `${teamName(team)}答對了！${bonus ? "三連答，加強拉力！" : ""}`;
     } else {
       state.streaks[team] = 0;
-      const correct = `${state.question.label} / ${state.question.letter}`;
+      const correct = correctAnswerLabel();
       state.lastEvent = `${teamName(team)}答錯了，正確答案是 ${correct}。`;
     }
 
