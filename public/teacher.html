@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>老師端｜五線譜拔河大戰</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="teacher-layout">
+      <header class="top-bar">
+        <div>
+          <p class="eyebrow">老師投影畫面</p>
+          <h1>五線譜拔河大戰</h1>
+        </div>
+        <div class="teacher-controls">
+          <button id="nextQuestion" class="primary-button">下一題</button>
+          <button id="resetGame" class="secondary-button">重新開始</button>
+        </div>
+      </header>
+
+      <section class="scoreboard">
+        <article class="team-panel blue-panel">
+          <span>藍隊</span>
+          <strong id="scoreA">0</strong>
+          <small id="streakA">連答：0</small>
+        </article>
+        <article class="status-panel">
+          <span id="questionNumber">尚未開始</span>
+          <strong id="gameStatus">請按下一題</strong>
+          <small id="lastEvent">準備開始遊戲。</small>
+        </article>
+        <article class="team-panel red-panel">
+          <span>紅隊</span>
+          <strong id="scoreB">0</strong>
+          <small id="streakB">連答：0</small>
+        </article>
+      </section>
+
+      <section class="link-card">
+        <strong>iPad 連結</strong>
+        <span>藍隊：<code id="blueLink">讀取中…</code></span>
+        <span>紅隊：<code id="redLink">讀取中…</code></span>
+      </section>
+
+      <section class="game-stage">
+        <div class="tug-area">
+          <div class="side-label blue-text">藍隊</div>
+          <div class="rope-track">
+            <div class="center-line"></div>
+            <div id="rope" class="rope">
+              <span class="flag">♪</span>
+            </div>
+          </div>
+          <div class="side-label red-text">紅隊</div>
+        </div>
+
+        <div class="characters" aria-hidden="true">
+          <div id="blueCharacter" class="character blue-character">🎻</div>
+          <div id="redCharacter" class="character red-character">🥁</div>
+        </div>
+      </section>
+
+      <section class="question-card">
+        <div>
+          <p class="eyebrow">本題音符</p>
+          <h2 id="questionTitle">等待老師出題</h2>
+        </div>
+        <div id="staff" class="staff"></div>
+        <p id="answerReveal" class="answer-reveal">答案會在隊伍作答後顯示於事件列。</p>
+      </section>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/shared.js"></script>
+    <script src="/teacher.js"></script>
+  </body>
+</html>
