@@ -3,6 +3,8 @@ const socket = io();
 const els = {
   nextQuestion: document.querySelector("#nextQuestion"),
   resetGame: document.querySelector("#resetGame"),
+  noteMode: document.querySelector("#noteMode"),
+  intervalMode: document.querySelector("#intervalMode"),
   scoreA: document.querySelector("#scoreA"),
   scoreB: document.querySelector("#scoreB"),
   streakA: document.querySelector("#streakA"),
@@ -34,6 +36,8 @@ fetch("/api/links")
 
 els.nextQuestion.addEventListener("click", () => socket.emit("teacher:next"));
 els.resetGame.addEventListener("click", () => socket.emit("teacher:reset"));
+els.noteMode.addEventListener("click", () => socket.emit("teacher:mode", "note"));
+els.intervalMode.addEventListener("click", () => socket.emit("teacher:mode", "interval"));
 
 socket.on("state", (state) => {
   els.scoreA.textContent = state.scores.A;
@@ -43,8 +47,12 @@ socket.on("state", (state) => {
   els.questionNumber.textContent = state.questionNumber ? `第 ${state.questionNumber} 題` : "尚未開始";
   els.lastEvent.textContent = state.lastEvent;
   els.gameStatus.textContent = state.winner ? `${teamDisplayName(state.winner)}勝利！` : state.status === "playing" ? "搶答中" : "請按下一題";
-  els.questionTitle.textContent = state.question ? "這個音是什麼？" : "等待老師出題";
+  const modeName = state.mode === "interval" ? "全音半音模式" : "認譜模式";
+  els.questionTitle.textContent = state.question ? questionPrompt(state) : `等待老師出題｜${modeName}`;
   els.answerReveal.textContent = state.question ? "學生作答後，可從事件列看到答題結果。" : "答案會在隊伍作答後顯示於事件列。";
+
+  els.noteMode.classList.toggle("active-mode", state.mode === "note");
+  els.intervalMode.classList.toggle("active-mode", state.mode === "interval");
 
   const movePercent = state.tugPosition * 5.8;
   els.rope.style.transform = `translateX(${movePercent}%)`;
@@ -54,3 +62,10 @@ socket.on("state", (state) => {
   els.nextQuestion.disabled = Boolean(state.winner);
   drawStaff(els.staff, state.question);
 });
+
+function questionPrompt(state) {
+  if (state.question?.type === "interval") {
+    return "這兩個音之間是全音還是半音？";
+  }
+  return "這個音是什麼？";
+}
