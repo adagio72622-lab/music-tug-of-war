@@ -1,0 +1,14 @@
+{
+  "name": "music-tug-of-war",
+  "version": "1.0.0",
+  "description": "國小音樂課用五線譜認譜拔河互動遊戲",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.3",
+    "socket.io": "^4.7.5"
+  }
+}
